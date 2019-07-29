@@ -1,33 +1,81 @@
-.App {
-  text-align: center;
+* {
+  margin: 0px;
+  padding: 0px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.main-header {
+  height: 50px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.bgimage {
+  width: 100%;
+  height: 130px;
+  background: grey;
+
+  background: url("https://images.unsplash.com/photo-1490971588422-52f6262a237a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1834&q=80");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: contain;
+}
+.bgimage h5 {
   color: white;
+  text-shadow: 2px 2px #333;
+  padding-top: 2px;
 }
 
-.App-link {
-  color: #61dafb;
+.favorite-link {
+  display: inline;
+  margin-left: 1200px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.favorite-list-container {
+  display: block;
+  margin-top: 20px;
+}
+
+.movietext {
+  margin-top: -40px;
+}
+
+.inputcontainer {
+  width: 500px;
+  padding-top: 1px;
+  margin-top: 1px;
+}
+
+.searchinput {
+  line-height: 35px;
+  bottom: -80px;
+  border: 3px rgb(14, 80, 202) solid;
+}
+
+.card {
+  min-height: 1000px;
+  max-width: 100%;
+  /* overflow: hidden; */
+  margin-top: 150px;
+}
+.card-img-top {
+  max-height: 500px;
+}
+.card-text {
+  margin-top: 50px;
+}
+.fixed-top {
+  border: 5px solid white;
+
+  margin: auto;
+}
+
+.added-favorite {
+  max-height: 10px;
+}
+
+.added-favorite::after {
+  display: block;
+  content: attr(title);
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
 }
