@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import Favorite from "./Favorite";
 import ReactTextCollapse from "react-text-collapse";
 
@@ -19,15 +18,18 @@ const TEXT_COLLAPSE_OPTIONS = {
 class Moviecard extends Component {
   render() {
     const {
-      getgenre,
-      addtofavorite,
-      favoritelistkeys,
+      getGenre,
+
       poster,
       title,
       overview,
       voteaverage,
       genre,
-      id
+      id,
+      addToFavorite,
+      getFavoritelist,
+      getstate,
+      removeFromFavorite
     } = this.props;
 
     return (
@@ -61,17 +63,18 @@ class Moviecard extends Component {
                       key={index}
                     >
                       {index < num - 1
-                        ? getgenre(items) + "-"
-                        : getgenre(items)}
+                        ? getGenre(items) + "-"
+                        : getGenre(items)}
                     </span>
                   );
                 })}
               </div>
               <Favorite
-                key={id}
+                addToFavorite={e => addToFavorite(e)}
                 id={id}
-                addtofavorite={e => addtofavorite(e)}
-                favoritelistkeys={favoritelistkeys}
+                removeFromFavorite={e => removeFromFavorite(e)}
+                getstate={getstate}
+                getFavoritelist={getFavoritelist}
               />
             </div>
           </div>

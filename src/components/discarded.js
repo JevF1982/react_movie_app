@@ -25,6 +25,12 @@ newarr.map(item => {
 });
 
 
+key={id}
+id={id}
+addtofavorite={e => addtofavorite(e)}
+favoritelistkeys={favoritelistkeys}
+
+
 
 
 

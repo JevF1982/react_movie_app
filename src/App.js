@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Header from "./components/Header";
-import Moviecard from "./components/Moviecard";
-import Favoritelist from "./components/Favoritelist";
+
+import Home from "./components/Home";
 
 class App extends Component {
-  _isMounted = false;
   constructor(props) {
     super(props);
 
@@ -14,19 +11,12 @@ class App extends Component {
       movie: "",
       movielist: [],
       moviegenres: [],
-      favoritelist: [],
-      isloading: false,
+      isloading: true,
       favoritelistkeys: []
     };
   }
 
   componentDidMount() {
-    this._isMounted = true;
-    this.getGenrelist();
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
     this.getGenrelist();
   }
 
@@ -70,7 +60,6 @@ class App extends Component {
           movielist: movies.results
         });
       });
-    console.log("movielist", this.state.movielist);
   };
 
   onChange = e => {
@@ -85,6 +74,7 @@ class App extends Component {
 
     e.preventDefault();
     const moviesearch = this.state.movie;
+
     this.movieFetch(moviesearch);
 
     this.setState({
@@ -102,94 +92,36 @@ class App extends Component {
     this.setState({
       favoritelistkeys: unique
     });
+    console.log(unique);
   };
 
-  getFavoritelist = () => {
-    const list = [];
+  removeFromFavorite = e => {
+    const removeitem = parseInt(e.target.getAttribute("data-key"));
+    const newarr = [...this.state.favoritelistkeys];
 
-    this.getGenrelist();
-    this.state.favoritelistkeys.map(movies => {
-      fetch(
-        `https://api.themoviedb.org/3/movie/${movies}?api_key=aa18119a1a89f0ad520b5348f4489409&language=en-US`
-      )
-        .then(result => {
-          return result.json();
-        })
-        .then(movies => {
-          list.push(movies);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    const filteredarr = newarr.filter(item => item !== removeitem);
+    console.log(filteredarr);
+    this.setState({
+      favoritelistkeys: filteredarr
     });
-    if (this._isMounted) {
-      console.log("get", list);
-      this.setState(
-        {
-          favoritelist: list
-        },
-        () => console.log("state", this.state.favoritelist)
-      );
-    } else {
-      return null;
-    }
   };
 
   render() {
     return (
-      <BrowserRouter>
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <Header
-              onchange={this.onChange}
-              onsubmit={this.onSubmit}
-              getFavoritelist={this.getFavoritelist}
-              isloading={this.state.isloading}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/"
-          render={() =>
-            this.state.movielist.map(item => {
-              return (
-                <Moviecard
-                  key={item.id}
-                  id={item.id}
-                  poster={item.poster_path}
-                  overview={item.overview}
-                  genre={item.genre_ids}
-                  title={item.title}
-                  voteaverage={item.vote_average}
-                  moviegenres={this.state.moviegenres}
-                  getgenre={this.getGenre}
-                  addtofavorite={this.addToFavorite}
-                  favoritelistkeys={this.state.favoritelistkeys}
-                />
-              );
-            })
-          }
-        />
-        <Switch>
-          <Route
-            exact
-            path="/Favoritelist"
-            render={() => (
-              <Favoritelist
-                favoritelist={this.state.favoritelist}
-                moviegenres={this.state.moviegenres}
-                addtofavorite={this.addToFavorite}
-                favoritelistkeys={this.state.favoritelistkeys}
-                getGenre={this.getGenre}
-              />
-            )}
-          />
-        </Switch>
-      </BrowserRouter>
+      <Home
+        movielist={this.state.movielist}
+        moviegenres={this.state.moviegenres}
+        favoritelistkeys={this.state.favoritelistkeys}
+        getGenre={this.getGenre}
+        movieFetch={this.movieFetch}
+        onChange={this.onChange}
+        onSubmit={this.onSubmit}
+        addToFavorite={this.addToFavorite}
+        movie={this.state.movie}
+        removeFromFavorite={this.removeFromFavorite}
+      />
     );
   }
 }
+
 export default App;

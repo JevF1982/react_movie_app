@@ -17,17 +17,23 @@ class Favorite extends Component {
   };
 
   render() {
-    const { addtofavorite, id } = this.props;
+    const {
+      addToFavorite,
+      id,
+      getstate,
+      removeFromFavorite,
+      getFavoritelist
+    } = this.props;
 
     return (
       <div className="favorite">
         <div className="checkbox text-center p-3 text-warning text-uppercase">
-          {!this.state.ischecked ? (
+          {!this.state.ischecked && !getstate ? (
             <label key={id}>
               <input
                 type="checkbox"
                 className="m-3"
-                onClick={addtofavorite}
+                onClick={addToFavorite}
                 data-key={id}
                 checked={this.state.ischecked}
                 onChange={this.changeCheck}
@@ -36,8 +42,16 @@ class Favorite extends Component {
             </label>
           ) : (
             <label key={id}>
+              <input
+                type="checkbox"
+                className="hidden"
+                onClick={removeFromFavorite}
+                data-key={id}
+                checked={this.state.ischecked}
+                onChange={getFavoritelist}
+              />
               <FontAwesomeIcon icon={faCheck} className="mr-4 added-favorite" />
-              Added to favorites
+              Remove from favorites
             </label>
           )}
         </div>

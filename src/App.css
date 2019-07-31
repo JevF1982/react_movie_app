@@ -79,3 +79,7 @@
   overflow: hidden;
   visibility: hidden;
 }
+
+.hidden {
+  display: none;
+}

@@ -1,11 +1,10 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 
 import Inputbox from "./Inputbox";
 
 import { Link } from "react-router-dom";
 
-const Header = ({ onchange, onsubmit, getFavoritelist, isloading }) => {
+const Header = ({ onChange, onSubmit, changeRoute }) => {
   return (
     <div className="fixed-top">
       <section className="bgimage ">
@@ -21,18 +20,17 @@ const Header = ({ onchange, onsubmit, getFavoritelist, isloading }) => {
                 to={"/Favoritelist"}
                 style={{ color: "yellow" }}
                 className="favorite-link text-uppercase"
-                onClick={getFavoritelist}
               >
                 Go to favorites
               </Link>
             </div>
           </div>
 
-          <Inputbox onchange={e => onchange(e)} onsubmit={e => onsubmit(e)} />
+          <Inputbox onChange={e => onChange(e)} onSubmit={e => onSubmit(e)} />
         </div>
       </section>
     </div>
   );
 };
 
-export default withRouter(Header);
+export default Header;
