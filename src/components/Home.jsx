@@ -17,24 +17,28 @@ const Home = props => {
       <Route
         exact
         path="/"
-        render={() =>
-          props.movielist.map(item => (
-            <Moviecard
-              key={item.id}
-              id={item.id}
-              poster={item.poster_path}
-              overview={item.overview}
-              genre={item.genre_ids}
-              title={item.title}
-              voteaverage={item.vote_average}
-              moviegenres={props.moviegenres}
-              getGenre={props.getGenre}
-              addToFavorite={e => props.addToFavorite(e)}
-              favoritelistkeys={props.favoritelistkeys}
-              removeFromFavorite={e => props.removeFromFavorite(e)}
-            />
-          ))
-        }
+        render={() => (
+          <div className="card-columns">
+            {props.movielist.map(item =>
+              item.poster_path ? (
+                <Moviecard
+                  key={item.id}
+                  id={item.id}
+                  poster={item.poster_path}
+                  overview={item.overview}
+                  genre={item.genre_ids}
+                  title={item.title}
+                  voteaverage={item.vote_average}
+                  moviegenres={props.moviegenres}
+                  getGenre={props.getGenre}
+                  addToFavorite={e => props.addToFavorite(e)}
+                  favoritelistkeys={props.favoritelistkeys}
+                  removeFromFavorite={e => props.removeFromFavorite(e)}
+                />
+              ) : null
+            )}
+          </div>
+        )}
       />
       <Switch>
         <Route

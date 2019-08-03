@@ -22,7 +22,8 @@ class Favorite extends Component {
       id,
       getstate,
       removeFromFavorite,
-      getFavoritelist
+      getFavoritelist,
+      favoritelistkeys
     } = this.props;
 
     return (
@@ -42,14 +43,18 @@ class Favorite extends Component {
             </label>
           ) : (
             <label key={id}>
-              <input
-                type="checkbox"
-                className="hidden"
-                onClick={removeFromFavorite}
-                data-key={id}
-                checked={this.state.ischecked}
-                onChange={getFavoritelist}
-              />
+              <div onClickCapture={getFavoritelist}>
+                <input
+                  type="checkbox"
+                  className="hidden"
+                  onClick={removeFromFavorite}
+                  data-key={id}
+                  checked={this.state.ischecked}
+                  onChange={e => {
+                    this.changeCheck(e);
+                  }}
+                />
+              </div>
               <FontAwesomeIcon icon={faCheck} className="mr-4 added-favorite" />
               Remove from favorites
             </label>

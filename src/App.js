@@ -56,9 +56,15 @@ class App extends Component {
         return result.json();
       })
       .then(movies => {
-        this.setState({
-          movielist: movies.results
+        movies.results.forEach(function(element) {
+          element.Active = "false";
         });
+        this.setState(
+          {
+            movielist: movies.results
+          },
+          () => console.log("movies", this.state.movielist)
+        );
       });
   };
 
@@ -101,6 +107,7 @@ class App extends Component {
 
     const filteredarr = newarr.filter(item => item !== removeitem);
     console.log(filteredarr);
+
     this.setState({
       favoritelistkeys: filteredarr
     });
@@ -118,7 +125,8 @@ class App extends Component {
         onSubmit={this.onSubmit}
         addToFavorite={this.addToFavorite}
         movie={this.state.movie}
-        removeFromFavorite={this.removeFromFavorite}
+        removeFromFavorite={e => this.removeFromFavorite(e)}
+        getCheckState={this.getCheckState}
       />
     );
   }

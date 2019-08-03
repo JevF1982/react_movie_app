@@ -25,12 +25,14 @@
 }
 
 .favorite-link {
-  display: inline;
-  margin-left: 1200px;
+  margin-left: 30px;
+
+  position: relative;
 }
 
 .favorite-list-container {
-  display: block;
+  display: inline-block;
+
   margin-top: 20px;
 }
 
@@ -52,8 +54,8 @@
 
 .card {
   min-height: 1000px;
-  max-width: 100%;
-  /* overflow: hidden; */
+  width: 100%;
+
   margin-top: 150px;
 }
 .card-img-top {
@@ -82,4 +84,18 @@
 
 .hidden {
   display: none;
+}
+
+.favoriteheader {
+  margin-top: 95px;
+  font-size: 30px;
+}
+
+@media screen and (max-width: 600px) {
+  .favorite-link {
+    font-size: 13px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+    position: relative;
+  }
 }
