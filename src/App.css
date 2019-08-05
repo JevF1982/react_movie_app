@@ -110,3 +110,28 @@
     margin-top: -25px;
   }
 }
+
+@media screen and (max-width: 320px) {
+  .favorite-link {
+    font-size: 8px;
+    margin-left: 120px;
+    top: -25px;
+    position: relative;
+  }
+
+  .inputcontainer {
+    width: auto;
+    padding-top: 1px;
+    margin-top: 1px;
+  }
+
+  .gotosearchlink {
+    font-size: 8px;
+    margin-top: 10px;
+    padding-left: 115px;
+  }
+
+  .bgimage {
+    height: 155px;
+  }
+}
