@@ -109,6 +109,9 @@
     font-size: 8px;
     margin-top: -25px;
   }
+  .bgimage {
+    height: 160px;
+  }
 }
 
 @media screen and (max-width: 320px) {
