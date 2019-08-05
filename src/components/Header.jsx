@@ -8,6 +8,14 @@ const Header = ({ onChange, onSubmit, changeLoad }) => {
   return (
     <div className="fixed-top">
       <section className="bgimage ">
+        <Link
+          to={"/Favoritelist"}
+          style={{ color: "yellow" }}
+          className="favorite-link text-uppercase"
+          onClick={changeLoad}
+        >
+          Go to favorites
+        </Link>
         <div className="container-fluid ">
           <div className="row main-header">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 movietext">
@@ -15,16 +23,7 @@ const Header = ({ onChange, onSubmit, changeLoad }) => {
                 Movie Search App
               </h5>
             </div>
-            <div className="favorite-list-container">
-              <Link
-                to={"/Favoritelist"}
-                style={{ color: "yellow" }}
-                className="favorite-link text-uppercase"
-                onClick={changeLoad}
-              >
-                Go to favorites
-              </Link>
-            </div>
+            <div className="favorite-list-container" />
           </div>
 
           <Inputbox onChange={e => onChange(e)} onSubmit={e => onSubmit(e)} />

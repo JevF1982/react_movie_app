@@ -13,6 +13,14 @@ class Favoritelist extends React.Component {
       <div>
         <div className="fixed-top">
           <section className="bgimage ">
+            <Link
+              to={"/"}
+              style={{ color: "yellow" }}
+              className=" favorite-link mb-5 ml-2 text-uppercase"
+              onClick={this.props.changeLoad}
+            >
+              Go to Search
+            </Link>
             <div className="container-fluid ">
               <div className="row main-header">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 movietext">
@@ -21,14 +29,6 @@ class Favoritelist extends React.Component {
                   </h5>
                 </div>
                 <div className="favorite-list-container" />
-                <Link
-                  to={"/"}
-                  style={{ color: "yellow" }}
-                  className=" gotosearchlink mb-5 ml-2 text-uppercase"
-                  onClick={this.props.changeLoad}
-                >
-                  Go to Search
-                </Link>
               </div>
             </div>
           </section>
