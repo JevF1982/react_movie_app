@@ -133,7 +133,7 @@ class Moviecard extends Component {
                       icon={faCheck}
                       className="mr-4 added-favorite"
                     />
-                    Hello from favorites
+                    Remove from favorites
                   </label>
                 )}
               </div>
