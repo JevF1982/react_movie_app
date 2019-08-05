@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import Favorite from "./Favorite";
+
 import ReactTextCollapse from "react-text-collapse";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const TEXT_COLLAPSE_OPTIONS = {
   collapse: false,
@@ -16,10 +18,28 @@ const TEXT_COLLAPSE_OPTIONS = {
 };
 
 class Moviecard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ischecked: false
+    };
+  }
+
+  changeCheck = async e => {
+    if (this.props.gotList) {
+      this.setState({
+        ischecked: !this.state.ischecked
+      });
+    } else {
+      this.setState({
+        ischecked: this.state.ischecked
+      });
+    }
+  };
+
   render() {
     const {
       getGenre,
-      favoritelistkeys,
       poster,
       title,
       overview,
@@ -27,9 +47,8 @@ class Moviecard extends Component {
       genre,
       id,
       addToFavorite,
-      getFavoritelist,
-      getstate,
-      removeFromFavorite
+      removeFromFavorite,
+      removeFromFavoriteList
     } = this.props;
 
     return (
@@ -66,14 +85,59 @@ class Moviecard extends Component {
                 );
               })}
             </div>
-            <Favorite
-              addToFavorite={e => addToFavorite(e)}
-              id={id}
-              removeFromFavorite={e => removeFromFavorite(e)}
-              getstate={getstate}
-              getFavoritelist={getFavoritelist}
-              favoritelistkeys={favoritelistkeys}
-            />
+            <div className="favorite">
+              <div className="checkbox text-center p-3 text-warning text-uppercase">
+                {!this.props.active ? (
+                  <label key={id}>
+                    <input
+                      type="checkbox"
+                      className="m-3"
+                      onClick={addToFavorite}
+                      data-key={id}
+                      checked={this.state.ischecked}
+                      onChange={this.changeCheck}
+                    />
+                    Add to favorites
+                  </label>
+                ) : !this.props.gotList ? (
+                  <label key={id}>
+                    <div>
+                      <input
+                        type="checkbox"
+                        className="hidden"
+                        data-key={id}
+                        checked={this.state.checked}
+                        onChange={this.changeCheck}
+                        onClick={removeFromFavorite}
+                      />
+                    </div>
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className="mr-4 added-favorite"
+                    />
+                    Remove from favorites
+                  </label>
+                ) : (
+                  <label key={id}>
+                    <div>
+                      <input
+                        type="checkbox"
+                        className="hidden"
+                        data-key={id}
+                        checked={this.state.ischecked}
+                        onChange={this.changeCheck}
+                        onClick={e => removeFromFavoriteList(e)}
+                      />
+                    </div>
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className="mr-4 added-favorite"
+                    />
+                    Hello from favorites
+                  </label>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

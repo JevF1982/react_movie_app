@@ -11,34 +11,47 @@ const Home = props => {
         exact
         path="/"
         render={() => (
-          <Header onChange={props.onChange} onSubmit={props.onSubmit} />
+          <Header
+            onChange={props.onChange}
+            onSubmit={props.onSubmit}
+            changeLoad={() => props.changeLoad()}
+          />
         )}
       />
       <Route
         exact
         path="/"
-        render={() => (
-          <div className="card-columns">
-            {props.movielist.map(item =>
-              item.poster_path ? (
-                <Moviecard
-                  key={item.id}
-                  id={item.id}
-                  poster={item.poster_path}
-                  overview={item.overview}
-                  genre={item.genre_ids}
-                  title={item.title}
-                  voteaverage={item.vote_average}
-                  moviegenres={props.moviegenres}
-                  getGenre={props.getGenre}
-                  addToFavorite={e => props.addToFavorite(e)}
-                  favoritelistkeys={props.favoritelistkeys}
-                  removeFromFavorite={e => props.removeFromFavorite(e)}
-                />
-              ) : null
-            )}
-          </div>
-        )}
+        render={() =>
+          props.isLoading ? (
+            <div>Loading</div>
+          ) : (
+            <div className="card-columns">
+              {props.movielist.map(item =>
+                item.poster_path ? (
+                  <Moviecard
+                    key={item.id}
+                    id={item.id}
+                    poster={item.poster_path}
+                    overview={item.overview}
+                    genre={item.genre_ids}
+                    title={item.title}
+                    active={item.Active}
+                    voteaverage={item.vote_average}
+                    moviegenres={props.moviegenres}
+                    getGenre={props.getGenre}
+                    addToFavorite={e => props.addToFavorite(e)}
+                    favoritelistkeys={props.favoritelistkeys}
+                    removeFromFavorite={e => props.removeFromFavorite(e)}
+                    gotList={props.gotList}
+                    removeFromFavoriteList={e =>
+                      props.removeFromFavoriteList(e)
+                    }
+                  />
+                ) : null
+              )}
+            </div>
+          )
+        }
       />
       <Switch>
         <Route
@@ -52,6 +65,11 @@ const Home = props => {
               favoritelistkeys={props.favoritelistkeys}
               getGenre={props.getGenre}
               removeFromFavorite={e => props.removeFromFavorite(e)}
+              movielist={props.movielist}
+              gotList={props.gotList}
+              removeFromFavoriteList={e => props.removeFromFavoriteList(e)}
+              favoritelist={props.favoritelist}
+              changeLoad={props.changeLoad}
             />
           )}
         />

@@ -4,7 +4,7 @@ import Inputbox from "./Inputbox";
 
 import { Link } from "react-router-dom";
 
-const Header = ({ onChange, onSubmit, changeRoute }) => {
+const Header = ({ onChange, onSubmit, changeLoad }) => {
   return (
     <div className="fixed-top">
       <section className="bgimage ">
@@ -20,6 +20,7 @@ const Header = ({ onChange, onSubmit, changeRoute }) => {
                 to={"/Favoritelist"}
                 style={{ color: "yellow" }}
                 className="favorite-link text-uppercase"
+                onClick={changeLoad}
               >
                 Go to favorites
               </Link>

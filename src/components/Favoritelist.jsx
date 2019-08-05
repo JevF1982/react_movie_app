@@ -4,44 +4,9 @@ import { Promise } from "q";
 import { Link } from "react-router-dom";
 
 class Favoritelist extends React.Component {
-  _isMounted = false;
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      favoritelistitems: [],
-      getstate: false
-    };
+  async componentDidMount() {
+    await Promise.all(this.props.movielist);
   }
-
-  componentDidMount() {
-    this.getFavoritelist();
-  }
-
-  fetchData = async () => {
-    await this.props.favoritelistkeys;
-    const urls = [
-      this.props.favoritelistkeys.map(movies => {
-        return `https://api.themoviedb.org/3/movie/${movies}?api_key=aa18119a1a89f0ad520b5348f4489409&language=en-US`;
-      })
-    ];
-    const allRequests = urls[0].map(url =>
-      fetch(url).then(response => response.json())
-    );
-
-    return Promise.all(allRequests);
-  };
-
-  getFavoritelist = () => {
-    this._isMounted = true;
-
-    this.fetchData().then(arrayOfResponses =>
-      this.setState({
-        favoritelistitems: arrayOfResponses,
-        getstate: true
-      })
-    );
-  };
 
   render() {
     return (
@@ -60,6 +25,7 @@ class Favoritelist extends React.Component {
                   to={"/"}
                   style={{ color: "yellow" }}
                   className="mb-5 ml-2 text-uppercase"
+                  onClick={this.props.changeLoad}
                 >
                   Go to Search
                 </Link>
@@ -68,24 +34,30 @@ class Favoritelist extends React.Component {
           </section>
         </div>
         <div className="card-columns">
-          {this.state.favoritelistitems.map(item => (
-            <Moviecard
-              key={item.id}
-              id={item.id}
-              poster={item.poster_path}
-              overview={item.overview}
-              genre={item.genres}
-              title={item.title}
-              voteaverage={item.vote_average}
-              moviegenres={this.props.moviegenres}
-              getGenre={this.props.getGenre}
-              addToFavorite={this.props.addToFavorite}
-              favoritelistkeys={this.props.favoritelistkeys}
-              getstate={this.state.getstate}
-              removeFromFavorite={e => this.props.removeFromFavorite(e)}
-              getFavoritelist={this.getFavoritelist}
-            />
-          ))}
+          {this.props.favoritelist.map(item => {
+            if (item.Active === true) {
+              return (
+                <Moviecard
+                  key={item.id}
+                  id={item.id}
+                  poster={item.poster_path}
+                  overview={item.overview}
+                  genre={item.genre_ids}
+                  title={item.title}
+                  active={item.Active}
+                  voteaverage={item.vote_average}
+                  moviegenres={this.props.moviegenres}
+                  getGenre={this.props.getGenre}
+                  addToFavorite={this.props.addToFavorite}
+                  gotList={this.props.gotList}
+                  removeFromFavoriteList={e =>
+                    this.props.removeFromFavoriteList(e)
+                  }
+                />
+              );
+            }
+            return null;
+          })}
         </div>
       </div>
     );

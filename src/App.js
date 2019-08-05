@@ -11,26 +11,46 @@ class App extends Component {
       movie: "",
       movielist: [],
       moviegenres: [],
-      isloading: true,
-      favoritelistkeys: []
+      gotList: false,
+      isLoading: true,
+      favoritelist: []
     };
   }
 
   componentDidMount() {
     this.getGenrelist();
+    this.switchLoading();
   }
+
+  switchLoading = () => {
+    this.setState({
+      isLoading: false
+    });
+  };
+
+  handleErrors = response => {
+    if (!response.ok) {
+      throw Error(response.statusText);
+    }
+    return response;
+  };
 
   getGenrelist = () => {
     fetch(
       "https://api.themoviedb.org/3/genre/movie/list?api_key=aa18119a1a89f0ad520b5348f4489409&language=en-US"
     )
+      .then(this.handleErrors)
       .then(result => {
         return result.json();
       })
+
       .then(genres => {
         this.setState({
           moviegenres: genres
         });
+      })
+      .catch(err => {
+        console.log("URL not found ", err);
       });
   };
 
@@ -52,19 +72,21 @@ class App extends Component {
     await fetch(
       `https://api.themoviedb.org/3/search/movie?api_key=aa18119a1a89f0ad520b5348f4489409&query=${movie}`
     )
+      .then(this.handleErrors)
       .then(result => {
         return result.json();
       })
       .then(movies => {
         movies.results.forEach(function(element) {
-          element.Active = "false";
+          element.Active = false;
         });
-        this.setState(
-          {
-            movielist: movies.results
-          },
-          () => console.log("movies", this.state.movielist)
-        );
+        this.setState({
+          movielist: movies.results,
+          favoritelist: movies.results
+        });
+      })
+      .catch(err => {
+        console.log("Movies not found  ", err);
       });
   };
 
@@ -84,32 +106,62 @@ class App extends Component {
     this.movieFetch(moviesearch);
 
     this.setState({
-      movielist: emptyarr
+      movielist: emptyarr,
+      favoritelist: emptyarr
     });
   };
 
   addToFavorite = e => {
-    const newarr = [
-      ...this.state.favoritelistkeys,
-      parseInt(e.target.getAttribute("data-key"))
-    ];
-    const unique = [...new Set(newarr)];
+    const itemkey = parseInt(e.target.getAttribute("data-key"));
 
-    this.setState({
-      favoritelistkeys: unique
+    const newlist = this.state.movielist.map(item => {
+      if (item.id === itemkey) {
+        item.Active = true;
+
+        return item;
+      }
+      return item;
     });
-    console.log(unique);
+    this.setState({
+      movielist: newlist
+    });
   };
 
   removeFromFavorite = e => {
-    const removeitem = parseInt(e.target.getAttribute("data-key"));
-    const newarr = [...this.state.favoritelistkeys];
+    const itemkey = parseInt(e.target.getAttribute("data-key"));
 
-    const filteredarr = newarr.filter(item => item !== removeitem);
-    console.log(filteredarr);
+    const newlist = this.state.movielist.map(item => {
+      if (item.id === itemkey) {
+        item.Active = false;
+
+        return item;
+      }
+      return item;
+    });
 
     this.setState({
-      favoritelistkeys: filteredarr
+      movielist: newlist
+    });
+  };
+
+  changeLoad = () => {
+    this.setState({
+      gotList: !this.state.gotList
+    });
+  };
+
+  removeFromFavoriteList = e => {
+    const itemkey = parseInt(e.target.getAttribute("data-key"));
+
+    const newlist = this.state.movielist.filter(item => {
+      if (item.id !== itemkey) {
+        return item;
+      }
+      return (item.Active = false);
+    });
+
+    this.setState({
+      favoritelist: newlist
     });
   };
 
@@ -126,7 +178,11 @@ class App extends Component {
         addToFavorite={this.addToFavorite}
         movie={this.state.movie}
         removeFromFavorite={e => this.removeFromFavorite(e)}
-        getCheckState={this.getCheckState}
+        changeLoad={this.changeLoad}
+        gotList={this.state.gotList}
+        isLoading={this.state.isLoading}
+        removeFromFavoriteList={e => this.removeFromFavoriteList(e)}
+        favoritelist={this.state.favoritelist}
       />
     );
   }
