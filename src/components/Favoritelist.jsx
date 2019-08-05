@@ -24,7 +24,7 @@ class Favoritelist extends React.Component {
                 <Link
                   to={"/"}
                   style={{ color: "yellow" }}
-                  className="mb-5 ml-2 text-uppercase"
+                  className=" gotosearchlink mb-5 ml-2 text-uppercase"
                   onClick={this.props.changeLoad}
                 >
                   Go to Search
