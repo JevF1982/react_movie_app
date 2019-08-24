@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import SimpleStorage from "react-simple-storage";
 
 import Home from "./components/Home";
 
@@ -122,8 +123,9 @@ class App extends Component {
       }
       return item;
     });
+
     this.setState({
-      movielist: newlist
+      favoritelist: newlist
     });
   };
 
@@ -144,7 +146,7 @@ class App extends Component {
     });
   };
 
-  changeLoad = () => {
+  changeLoad = e => {
     this.setState({
       gotList: !this.state.gotList
     });
@@ -157,6 +159,7 @@ class App extends Component {
       if (item.id !== itemkey) {
         return item;
       }
+      console.log(item.Active);
       return (item.Active = false);
     });
 
@@ -167,23 +170,25 @@ class App extends Component {
 
   render() {
     return (
-      <Home
-        movielist={this.state.movielist}
-        moviegenres={this.state.moviegenres}
-        favoritelistkeys={this.state.favoritelistkeys}
-        getGenre={this.getGenre}
-        movieFetch={this.movieFetch}
-        onChange={this.onChange}
-        onSubmit={this.onSubmit}
-        addToFavorite={this.addToFavorite}
-        movie={this.state.movie}
-        removeFromFavorite={e => this.removeFromFavorite(e)}
-        changeLoad={this.changeLoad}
-        gotList={this.state.gotList}
-        isLoading={this.state.isLoading}
-        removeFromFavoriteList={e => this.removeFromFavoriteList(e)}
-        favoritelist={this.state.favoritelist}
-      />
+      <>
+        <SimpleStorage parent={this} />
+        <Home
+          movielist={this.state.movielist}
+          moviegenres={this.state.moviegenres}
+          getGenre={this.getGenre}
+          movieFetch={this.movieFetch}
+          onChange={this.onChange}
+          onSubmit={this.onSubmit}
+          addToFavorite={this.addToFavorite}
+          movie={this.state.movie}
+          removeFromFavorite={e => this.removeFromFavorite(e)}
+          changeLoad={this.changeLoad}
+          gotList={this.state.gotList}
+          isLoading={this.state.isLoading}
+          removeFromFavoriteList={e => this.removeFromFavoriteList(e)}
+          favoritelist={this.state.favoritelist}
+        />
+      </>
     );
   }
 }

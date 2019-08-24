@@ -25,16 +25,10 @@ class Moviecard extends Component {
     };
   }
 
-  changeCheck = async e => {
-    if (this.props.gotList) {
-      this.setState({
-        ischecked: !this.state.ischecked
-      });
-    } else {
-      this.setState({
-        ischecked: this.state.ischecked
-      });
-    }
+  changeCheck = () => {
+    this.setState({
+      ischecked: this.state.ischecked
+    });
   };
 
   render() {
@@ -108,7 +102,7 @@ class Moviecard extends Component {
                         data-key={id}
                         checked={this.state.checked}
                         onChange={this.changeCheck}
-                        onClick={removeFromFavorite}
+                        onClick={removeFromFavoriteList}
                       />
                     </div>
                     <FontAwesomeIcon
@@ -126,7 +120,7 @@ class Moviecard extends Component {
                         data-key={id}
                         checked={this.state.ischecked}
                         onChange={this.changeCheck}
-                        onClick={e => removeFromFavoriteList(e)}
+                        onClick={removeFromFavoriteList}
                       />
                     </div>
                     <FontAwesomeIcon

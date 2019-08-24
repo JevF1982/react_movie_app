@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 class Favoritelist extends React.Component {
   async componentDidMount() {
-    await Promise.all(this.props.movielist);
+    await Promise.all(this.props.favoritelist);
   }
 
   render() {
@@ -17,7 +17,6 @@ class Favoritelist extends React.Component {
               to={"/"}
               style={{ color: "yellow" }}
               className=" favorite-link mb-5 ml-2 text-uppercase"
-              onClick={this.props.changeLoad}
             >
               Go to Search
             </Link>
