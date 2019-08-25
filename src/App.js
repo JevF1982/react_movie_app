@@ -4,6 +4,9 @@ import SimpleStorage from "react-simple-storage";
 
 import Home from "./components/Home";
 
+const unique = [];
+let newarr = [];
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -82,8 +85,7 @@ class App extends Component {
           element.Active = false;
         });
         this.setState({
-          movielist: movies.results,
-          favoritelist: movies.results
+          movielist: movies.results
         });
       })
       .catch(err => {
@@ -107,25 +109,29 @@ class App extends Component {
     this.movieFetch(moviesearch);
 
     this.setState({
-      movielist: emptyarr,
-      favoritelist: emptyarr
+      movielist: emptyarr
     });
   };
 
   addToFavorite = e => {
     const itemkey = parseInt(e.target.getAttribute("data-key"));
 
-    const newlist = this.state.movielist.map(item => {
+    console.log(this.state.favoritelist);
+
+    this.state.movielist.map(item => {
       if (item.id === itemkey) {
         item.Active = true;
+        unique.push(item);
 
         return item;
       }
       return item;
     });
 
+    newarr = [...new Set(unique)];
+
     this.setState({
-      favoritelist: newlist
+      favoritelist: newarr
     });
   };
 
@@ -155,7 +161,7 @@ class App extends Component {
   removeFromFavoriteList = e => {
     const itemkey = parseInt(e.target.getAttribute("data-key"));
 
-    const newlist = this.state.movielist.filter(item => {
+    const newlist = this.state.favoritelist.filter(item => {
       if (item.id !== itemkey) {
         return item;
       }

@@ -41,7 +41,7 @@ class Moviecard extends Component {
       genre,
       id,
       addToFavorite,
-      removeFromFavorite,
+
       removeFromFavoriteList
     } = this.props;
 

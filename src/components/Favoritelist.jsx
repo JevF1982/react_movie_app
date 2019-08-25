@@ -32,6 +32,7 @@ class Favoritelist extends React.Component {
             </div>
           </section>
         </div>
+
         <div className="card-columns">
           {this.props.favoritelist.map(item => {
             if (item.Active === true) {
