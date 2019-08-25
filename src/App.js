@@ -83,6 +83,11 @@ class App extends Component {
       .then(movies => {
         movies.results.forEach(function(element) {
           element.Active = false;
+          newarr.filter(item => {
+            if (item.id === element.id) {
+              element.Active = true;
+            }
+          });
         });
         this.setState({
           movielist: movies.results
@@ -142,7 +147,7 @@ class App extends Component {
       if (item.id === itemkey) {
         item.Active = false;
 
-        return item;
+        // return item;
       }
       return item;
     });
@@ -169,8 +174,16 @@ class App extends Component {
       return (item.Active = false);
     });
 
+    const newmovielist = this.state.movielist.map(item => {
+      if (item.id === itemkey) {
+        item.Active = false;
+      }
+      return item;
+    });
+
     this.setState({
-      favoritelist: newlist
+      favoritelist: newlist,
+      movielist: newmovielist
     });
   };
 
