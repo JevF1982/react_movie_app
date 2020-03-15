@@ -41,7 +41,7 @@ class App extends Component {
 
   getGenrelist = () => {
     fetch(
-      "https://api.themoviedb.org/3/genre/movie/list?api_key=aa18119a1a89f0ad520b5348f4489409&language=en-US"
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_KEY}&language=en-US`
     )
       .then(this.handleErrors)
       .then(result => {
@@ -74,7 +74,7 @@ class App extends Component {
 
   movieFetch = async movie => {
     await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=aa18119a1a89f0ad520b5348f4489409&query=${movie}`
+      `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_KEY}&query=${movie}`
     )
       .then(this.handleErrors)
       .then(result => {
